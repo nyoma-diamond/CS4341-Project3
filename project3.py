@@ -51,13 +51,13 @@ training_images, test_images, training_labels, test_labels = train_test_split(
 )
 
 
-es_callback = callbacks.EarlyStopping(monitor='val_loss', patience=100)
+es_callback = callbacks.EarlyStopping(monitor='val_loss', patience=50)
 
 # Train Model
 history = model.fit(training_images, training_labels,
 					validation_split=.2,
                     #validation_data = (validation_images, validation_labels), 
-                    epochs=250, 
+                    epochs=2000, 
                     batch_size=512,
 					shuffle=True,
 					callbacks=[es_callback])
