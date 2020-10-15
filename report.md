@@ -4,11 +4,11 @@ Rafael Pimentel, N'yoma Diamond
 
 ## Model & Training Procedure Description
 
-lorem ipsum
+For our first experiments, we decided to start adding hidden layers, without changing any of the other parameters,
 
 ## Model Performance & Confusion Matrix
 
-[confusion matrix](confusion-matrix.png)
+![confusion matrix](confusion-matrix.png)
 
 ## Training Performance Plot
 
