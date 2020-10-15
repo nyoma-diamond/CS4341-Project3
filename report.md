@@ -4,16 +4,21 @@ Rafael Pimentel, N'yoma Diamond
 
 ## Model & Training Procedure Description
 
-For our first experiments, we decided to start adding hidden layers, without changing any of the other parameters,
+For our first experiments, we decided to start adding hidden layers, and changed the amount of epochs that we had.
+After a certain amount of epochs the accuracy would stop improving.
 
 ## Model Performance & Confusion Matrix
+
+lorem ipsum
 
 ![confusion matrix](confusion-matrix.png)
 
 ## Training Performance Plot
 
-lorem ipsum
+Loss               |  Accuracy
+:-----------------:|:--------------------------:
+![loss](loss.png)  |  ![accuracy](accuracy.png)
 
 ## Visualization
 
-lorem ipsum
+![incorrect predictions](incorrect-predictions.png)

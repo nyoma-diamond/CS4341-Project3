@@ -5,7 +5,7 @@ from keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from matplotlib import pyplot as plt
-import random
+import math
 import numpy as np
 from time import time 
 from keras import callbacks, regularizers
@@ -16,11 +16,7 @@ images = np.load("images.npy")
 
 PIXEL_COUNT = len(images[0]) * len(images[0][0])
 
-images = np.ma.array(np.reshape(
-				np.load("images.npy"), 
-				(len(images), PIXEL_COUNT)
-			), 
-			mask=False)
+images = np.reshape(images, (len(images), PIXEL_COUNT))
 
 labels = to_categorical(np.ma.array(np.load("labels.npy"), mask=False), 10)
 
@@ -29,7 +25,7 @@ labels = to_categorical(np.ma.array(np.load("labels.npy"), mask=False), 10)
 model = Sequential() # declare model
 model.add(Dense(512, input_shape=(PIXEL_COUNT, ), kernel_initializer='random_uniform', kernel_regularizer=regularizers.l2(0.001))) # first layer
 #model.add(Dropout(0.5))
-model.add(Activation('tanh'))
+model.add(Activation('relu'))
 
 model.add(Dense(128, kernel_initializer='random_uniform', kernel_regularizer=regularizers.l2(0.001)))
 #model.add(Dropout(0.3))
@@ -61,12 +57,12 @@ es_callback = callbacks.EarlyStopping(monitor='val_loss', patience=100)
 history = model.fit(training_images, training_labels,
 					validation_split=.2,
                     #validation_data = (validation_images, validation_labels), 
-                    epochs=30000, 
+                    epochs=250, 
                     batch_size=512,
 					shuffle=True,
 					callbacks=[es_callback])
 
-model.save("model")
+model.save("model.tf")
 
 # Report Results
 hist = history.history
@@ -109,3 +105,44 @@ for i in LABELS_NUMS:
 		plt.text(j, i, con_matrix[i,j], ha="center", va="center", color="w")
 
 plt.savefig("confusion-matrix.png")
+
+plt.clf()
+
+print("Plotting incorrect predictions...")
+
+unflattened = np.reshape(test_images, (len(test_images), round(math.sqrt(PIXEL_COUNT)), round(math.sqrt(PIXEL_COUNT))))
+
+count = 0
+
+for i in range(len(predictions)):
+	if np.argmax(predictions[i]) != np.argmax(test_labels[i]):
+		# print("P: ", end="")
+		# print(np.argmax(predictions[i]), end=" | ")
+		# print("A: ", end="")
+		# print(np.argmax(test_labels[i]))
+		count += 1
+
+fig = plt.figure(figsize=(round(math.sqrt(count)), round(math.sqrt(count))))
+fig.suptitle("Incorrect predictions and their corresponding images", fontsize=24)
+
+i = 0
+j = 1
+while i < len(unflattened) and j < round(math.sqrt(count))*round(math.sqrt(count)):
+	if np.argmax(predictions[i]) != np.argmax(test_labels[i]):
+		# print("P: ", end="")
+		# print(np.argmax(predictions[i]), end=" | ")
+		# print("A: ", end="")
+		# print(np.argmax(test_labels[i]))
+
+		fig.add_subplot(round(math.sqrt(count)), round(math.sqrt(count)), j)
+		j += 1
+		ax = plt.gca()
+		ax.xaxis.set_visible(False)
+		ax.yaxis.set_visible(False)
+		plt.imshow(unflattened[i], cmap='gray')
+		plt.title(np.argmax(predictions[i]))
+	i += 1
+
+plt.tight_layout()
+
+plt.savefig("incorrect-predictions.png")
