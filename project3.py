@@ -62,7 +62,7 @@ es_callback = callbacks.EarlyStopping(monitor='val_loss', patience=100)
 history = model.fit(training_images, training_labels,
 					validation_split=.2,
                     #validation_data = (validation_images, validation_labels), 
-                    epochs=10000, 
+                    epochs=200, 
                     batch_size=512,
 					shuffle=True,
 					callbacks=[es_callback])
