@@ -1,7 +1,8 @@
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout, Flatten
+from keras.layers import Dense, Activation
 from keras.utils.vis_utils import plot_model
-from keras.utils import to_categorical
+from keras.utils import plot_model, to_categorical
+from keras.models import load_model
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from matplotlib import pyplot as plt
@@ -38,7 +39,11 @@ model.add(Activation('tanh'))
 model.add(Dense(10, kernel_initializer='he_normal')) # output layer
 model.add(Activation('softmax'))
 print(model.summary())
-#plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True) #TODO: get this working
+
+try:
+	plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True) #TODO: get this working
+except:
+	print("Model plot could not be generated.")
 
 # Compile Model
 model.compile(optimizer='sgd',
@@ -51,13 +56,13 @@ training_images, test_images, training_labels, test_labels = train_test_split(
 )
 
 
-es_callback = callbacks.EarlyStopping(monitor='val_loss', patience=50)
+es_callback = callbacks.EarlyStopping(monitor='val_loss', patience=100)
 
 # Train Model
 history = model.fit(training_images, training_labels,
 					validation_split=.2,
                     #validation_data = (validation_images, validation_labels), 
-                    epochs=2000, 
+                    epochs=10000, 
                     batch_size=512,
 					shuffle=True,
 					callbacks=[es_callback])
@@ -123,7 +128,7 @@ for i in range(len(predictions)):
 		count += 1
 
 fig = plt.figure(figsize=(round(math.sqrt(count)), round(math.sqrt(count))))
-fig.suptitle("Incorrect predictions and their corresponding images", fontsize=24)
+fig.suptitle("Incorrect predictions and their corresponding images", fontsize=20)
 
 i = 0
 j = 1
