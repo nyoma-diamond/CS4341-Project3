@@ -22,7 +22,7 @@ images = np.reshape(images, (len(images), PIXEL_COUNT))
 labels = to_categorical(np.ma.array(np.load("labels.npy"), mask=False), 10)
 
 
-model = load_model("best-model.tf")
+model = load_model("best-tested-model.tf")
 
 
 predictions = model.predict(images)
