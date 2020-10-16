@@ -14,16 +14,16 @@ The most effective model we reached had three hidden layers: in order, the layer
 
 ![model structure](model_plot.png)
 
-![confusion matrix](confusion-matrix.png)
+![confusion matrix](best-confusion-matrix.png)
 
 ## Training Performance Plot
 
 Loss               |  Accuracy
 :-----------------:|:--------------------------:
-![loss](loss.png)  |  ![accuracy](accuracy.png)
+![loss](best-loss.png)  |  ![accuracy](best-accuracy.png)
 
 ## Visualization
 
 We aren't exactly clear as to why our AI missclassifies many of the images it does. The images that are missclassified are always different as a result of us using the Law of Large Numbers to let us randomize our training/validation/testing sets to stratify our data. Because of this there isn't really any clear way for us to identify if our algorithm is consistently wrong on certain things for specific reasons. That said, it appears pretty consistent in its mistakes, so it isn't consistently mistaking some numbers for others. That said, there are a few images in the data set that aren't exactly clear in their own right: there is a 2 that looks like an 8; a 5 that looks like a 2; a few 9's and 6's look like 0's; a couple 7's look like 1's and vice-versa; and a couple that are arguably illegible.
 
-![incorrect predictions](incorrect-predictions.png)
+![incorrect predictions](best-incorrect-predictions.png)
