@@ -12,9 +12,9 @@ This knowledge in hand, we scaled back the number of nodes in the first hidden l
 
 The most effective model we reached had three hidden layers: in order, the layers had 512, 128, and 32 nodes respectively. All but the last hidden layer used the relu activation function, while the last one used tanh. All layers other than the output layer (which used he_normal) were initialized using the random_uniform intialization scheme. In our training we used a batch size of 512 and trained for 10,000 epochs (to be honest we probably could have stopped much earlier but 10,000 is a nice number and the model still saw consistent, albeit very minor, improvements up to 10,000 epochs).
 
-![model structure](model_plot.png)
-
-![confusion matrix](best-confusion-matrix.png)
+Model Plot                         | Confusion Matrix
+:---------------------------------:|:-----------------------:
+![model structure](model_plot.png) | ![confusion matrix](best-confusion-matrix.png)
 
 ## Training Performance Plot
 
